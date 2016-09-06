@@ -1,0 +1,43 @@
+#!/usr/bin/make -f
+
+########################################################################
+#                   DECLARAÇÃO DE VARIÁVEIS:                           #
+########################################################################
+CC=gcc
+CFLAGS=-I./diretorio_de_cabecalhos/
+DO_QUE_DEPENDO_PARA_COMPILAR = cabecalho.h
+OBJETOS_DESTA_COMPILACAO = funcoes.o principal.o
+
+########################################################################
+#                   Primeira Regra de compilação:                      #
+########################################################################
+%.o: %.c $(DO_QUE_DEPENDO_PARA_COMPILAR)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+# A regra acima diz para o make que todos arquivos objeto "%.o" dependem
+# do arquivo %.c de respectivo nome e dos arquivos .h
+# declarados na variável DO_QUE_DEPENDO_PARA_COMPILAR
+	
+# na linha "	$(CC) -c -o $@ $< $(CFLAGS)", 
+# a opção:
+#   -c -> indica que o compilador deve gerar arquivos objeto .o
+#   -o -> nome do arquivo de saída
+#   $@ -> o nome que esta do lado esquerdo dos ":"
+#   $< -> o nome do primeiro item na lista de dependência.
+
+########################################################################
+#                   Primeiro alvo de compilação:                      #
+########################################################################
+
+# atente para
+#   $@ -> o nome que esta do lado esquerdo dos ":"
+#   $@ -> o(s) nomes que esta(ao) do lado direito dos ":"
+
+arquivo_saida: $(OBJETOS_DESTA_COMPILACAO)
+	@echo "************************************************************"
+	@echo "Makefile mais avançado: linha de compilacao formada pelas   "
+	@echo " variaveis CC , @ ^ e CFLAGS                                "
+	@echo "************************************************************"
+	$(CC) -o $@ $^ $(CFLAGS)
+
+

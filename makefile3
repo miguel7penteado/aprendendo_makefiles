@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+
+########################################################################
+#                   DECLARAÇÃO DE VARIÁVEIS:                           #
+########################################################################
+CC=gcc
+CFLAGS=-I./diretorio_de_cabecalhos/
+DO_QUE_DEPENDO_PARA_COMPILAR = cabecalho.h
+
+########################################################################
+#                   Primeira Regra de compilação:                      #
+########################################################################
+%.o: %.c $(DO_QUE_DEPENDO_PARA_COMPILAR)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+# A regra acima diz para o make que todos arquivos objeto "%.o" dependem
+# do arquivo %.c de respectivo nome e dos arquivos .h
+# declarados na variável DO_QUE_DEPENDO_PARA_COMPILAR
+	
+# na linha "	$(CC) -c -o $@ $< $(CFLAGS)", 
+# a opção:
+#   -c -> indica que o compilador deve gerar arquivos objeto .o
+#   -o -> nome do arquivo de saída
+#   $@ -> o nome da compilação deve ser o mesmo do lado esquerdo dos :
+#   $< -> o nome do primeiro item na lista de dependência.
+
+########################################################################
+#                   Primeiro alvo de compilação:                      #
+########################################################################
+
+primeiro_alvo: funcoes.o principal.o
+	@echo "************************************************************"
+	@echo "Makefile pouco mais avançado: define variaveis de ambiente  "
+	@echo "CC e CFLAGS "
+	@echo "************************************************************"
+	$(CC) -o arquivo_saida funcoes.o principal.o -I./diretorio_de_cabecalhos/
+
+

@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+
+# neste exemplo, criamos a variável CC que recebe o compilador
+# e criamos a variável CFLAGS contendo os argumentos
+# do compilador, como por exemplo, o diretório onde
+# ficam os arquivos de cabeçalho.
+
+CC=gcc
+CFLAGS=-I./diretorio_de_cabecalhos/
+
+# Repare que o target "primeiro_alvo" leva 2 arquivos-objeto como alvo,
+# que são funcoes.o e principal.o . O make entende isso da seguinte 
+# forma: devo compilar individualmente os arquivos
+# funcoes.c e principal.c e então ligar-los para gerar o
+# binário executável"arquivo_saida"
+
+primeiro_alvo: funcoes.o principal.o
+	@echo "************************************************************"
+	@echo "Makefile pouco mais avançado: define variaveis de ambiente  "
+	@echo "CC e CFLAGS "
+	@echo "************************************************************"
+	$(CC) -o arquivo_saida funcoes.o principal.o -I./diretorio_de_cabecalhos/
+
+
